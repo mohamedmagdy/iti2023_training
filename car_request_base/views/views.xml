@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record id="view_car_request_form" model="ir.ui.view">
+            <field name="name">Car Request Form</field>
+            <field name="model">car.request</field>
+            <field name="arch" type="xml">
+                <form string="Car Request Form">
+                    <header>
+                        <button name="set_inprogress" string="Set In Progress" type="object" class="oe_highlight" states="new"/>
+                        <button name="set_accepted" string="Accept" type="object" class="oe_highlight" states="inprogress"/>
+                        <button name="set_rejected" string="Reject" type="object" states="new,inprogress"/>
+                        <button name="set_cancelled" string="Cancel" type="object" states="accepted,new,inprogress"/>
+                        <button name="reset_new" string="Reset" type="object" states="rejected,cancelled" confirm="Are you sure?"/>
+                        <field name="state" widget="statusbar" statusbar_visible="new,inprogress,accepted"/>
+                    </header>
+                    <sheet>
+                        <field name="active" invisible="1"/>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1>
+                                <field name="name" placeholder="Request No."/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="request_creator"/>
+                                <field name="driver"/>
+                                <field name="start_date"/>
+                                <field name="end_date"/>
+                            </group>
+                            <group>
+                                <field name="car_id"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Address">
+                                <field name="destination"/>
+                            </page>
+                            <page string="Notes">
+                                <field name="note"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+
+        </record>
+
+        <record id="view_car_request_tree" model="ir.ui.view">
+            <field name="name">Car Request Tree</field>
+            <field name="model">car.request</field>
+            <field name="arch" type="xml">
+                <tree string="Car Request Tree">
+                    <field name="active" invisible="1"/>
+                    <field name="name"/>
+                    <field name="car_id"/>
+                    <field name="request_creator"/>
+                    <field name="driver"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="car_request_action" model="ir.actions.act_window">
+            <field name="name">Car Requests</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">car.request</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="car_request_root" name="CR Root" sequence="10"/>
+        <menuitem id="car_request_categ" name="CR Categ" sequence="1" parent="car_request_root"/>
+        <menuitem id="car_request_action_menu" name="Car Request" sequence="1" parent="car_request_categ"
+                  action="car_request_action"/>
+
+
+    </data>
+</odoo>
