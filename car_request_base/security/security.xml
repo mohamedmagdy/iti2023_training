@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record model="ir.module.category" id="car_request_security_categ">
+            <field name="name">Car Request</field>
+        </record>
+
+        <record id="car_request_user" model="res.groups">
+            <field name="name">User</field>
+            <field name="category_id" ref="car_request_security_categ"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <record id="car_request_manager" model="res.groups">
+            <field name="name">Manager</field>
+            <field name="category_id" ref="car_request_security_categ"/>
+            <field name="implied_ids" eval="[(4, ref('car_request_user'))]"/>
+        </record>
+
+    </data>
+</odoo>

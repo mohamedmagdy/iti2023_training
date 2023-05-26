@@ -1,2 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_car_request_base_car_request_base,car_request_base.car_request_base,model_car_request_base_car_request_base,base.group_user,1,1,1,1
+access_car_request_all_users,car_request.all_users access,model_car_request,car_request_user,1,1,1,0
+access_car_request_manager,car_request Manager access,model_car_request,car_request_manager,1,1,1,1

@@ -18,9 +18,22 @@ class CarRequest(models.Model):
     driver = fields.Many2one(comodel_name="res.users", string="Driver", default=lambda s: s.env.uid)
     start_date = fields.Datetime(string="Start Date", default=fields.Datetime.now, tracking=True)
     end_date = fields.Datetime(string="End Date", tracking=True)
+    duration = fields.Integer(string="Duration", compute="_compute_duration", store=True)
     car_id = fields.Many2one(comodel_name="fleet.vehicle", string="Requested Car", required=True)
     active = fields.Boolean(default=True)
     state = fields.Selection([('new', 'New'), ('inprogress', 'In Progress'), ('accepted', 'Accepted'), ('rejected', 'Rejected'), ('cancelled', 'Cancelled')], default="new", tracking=True)
+
+    _sql_constraints = [
+        ('uniq_request_state', 'unique()', 'Error SQL const!!')
+    ]
+
+    @api.depends('start_date', 'end_date')
+    def _compute_duration(self):
+        for rec in self:
+            if all([rec.start_date, rec.end_date]):
+                rec.duration = (rec.end_date - rec.start_date).days
+            else:
+                rec.duration = 0
 
     def set_inprogress(self):
         self.state = 'inprogress'
