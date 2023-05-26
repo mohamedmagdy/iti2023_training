@@ -1,1 +1,2 @@
-# iti2023_training
+# Odoo Modules for training Purposes
+ITI team
