@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+  <data>
+
+    <record id="car_request_per_car_action" model="ir.actions.act_window">
+        <field name="name">Car Requests</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">car.request</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('car_id', '=', active_id)]</field>
+        <field name="context">{'default_car_id': active_id}</field>
+    </record>
+
+    <record id="view_fleet_vehicle_view_form_inherit" model="ir.ui.view">
+      <field name="name">view.fleet.vehicle.form.inherit</field>
+      <field name="model">fleet.vehicle</field>
+      <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>
+      <field name="arch" type="xml">
+
+            <xpath expr="//div[@name='button_box']//button[@name='open_assignation_logs']" position="before">
+              <button name="%(car_request_per_car_action)d"
+                      type="action" string="Hi"
+                      class="oe_stat_button"
+                      icon="fa-user">
+                      <field name="requests_count" widget="statinfo" string="Requests"/>
+              </button>
+            </xpath>
+
+<!--        <xpath expr="//div[@name='button_box']" position="inside"></xpath>-->
+<!--        <xpath expr="//div[@name='button_box']" position="before"></xpath>-->
+<!--        <xpath expr="//div[@name='button_box']" position="after"></xpath>-->
+<!--        <xpath expr="//div[@name='button_box']" position="replace"></xpath>-->
+<!--        <xpath expr="//div[@name='button_box']" position="attributes"></xpath>-->
+
+      </field>
+    </record>
+
+  </data>
+</odoo>
